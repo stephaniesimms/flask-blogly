@@ -7,10 +7,11 @@
     <img src="{{user.image_url}}" alt="user profile photo" srcset="">
    <h2>{{user.first_name}} {{user.last_name}}</h2> 
 </div>
+<form >
 <div  class="row">
-    <button class="btn btn-primary">Edit</button>
-    <button class="btn btn-danger">Delete</button>
+    <a href="/edit_user/{{user.id}}" class="btn btn-danger">Edit</a>
+    <button class="btn btn-primary">Delete</button>
 </div>
-
+</form>
 
 {% endblock %}

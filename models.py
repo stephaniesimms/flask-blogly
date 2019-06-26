@@ -22,7 +22,7 @@ class User(db.Model):
                             nullable=False)
                    
     image_url = db.Column(db.String, 
-                                            nullable=True,
+                                            nullable=False,
                                             default = PLACEHOLDER_IMG)
         
     def __repr__(self):

@@ -10,7 +10,7 @@ app.config['SECRET_KEY'] = "oh-so-secret"
 
 debug = DebugToolbarExtension(app)
 
-app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
@@ -31,5 +31,11 @@ def get_users_list():
 
 @app.route('/user/<user_id>')
 def show_user_info(user_id):
+    """ Show information about the given user."""
     user_info = User.query.get(user_id)
     return render_template('user_info.html', user=user_info)
+
+@app.route("/edit_user/<user_id>")
+def show_edit_page(user_id):
+    """ Show the edit page for a user"""
+    return render_template('edit_user.html', user=user_id)
