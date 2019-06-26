@@ -4,6 +4,10 @@ PLACEHOLDER_IMG = "https://www.dictionary.com/e/wp-content/uploads/2018/03/Upsid
 
 db = SQLAlchemy()
 
+def connect_db(app):
+        db.app = app
+        db.init_app(app)
+
 class User(db.Model):
     """Create user modle for user table in db """
     __tablename__ = "users"
@@ -23,3 +27,4 @@ class User(db.Model):
         
     def __repr__(self):
         return f"<User id='{self.id}' name='{self.first_name} {self.last_name}'>"
+

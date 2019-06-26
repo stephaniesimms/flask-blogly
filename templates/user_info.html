@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} User Info {% endblock %}
+
+{% block content %}
+<div class="row">
+    <img src="{{user.image_url}}" alt="user profile photo" srcset="">
+   <h2>{{user.first_name}} {{user.last_name}}</h2> 
+</div>
+<div  class="row">
+    <button class="btn btn-primary">Edit</button>
+    <button class="btn btn-danger">Delete</button>
+</div>
+
+
+{% endblock %}
