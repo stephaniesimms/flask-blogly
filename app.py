@@ -94,6 +94,7 @@ def delete_user(user_id):
 
 @app.route("/users/<user_id>/posts/new")
 def show_new_post_page(user_id):
+    """Show form to add a post for that user."""
     user = User.query.get(user_id)
     
     return render_template("post_add.html", user=user)
@@ -113,6 +114,12 @@ def add_new_post(user_id):
     db.session.add(post)
     db.session.commit()
 
-    # posts = user.posts
-
     return redirect(f"/users/{user.id}")
+
+
+@app.route("/post/<post_id>")
+def show_post(post_id):
+    """Show a post."""
+
+    post = Post.query.get(post_id)
+    return render_template("post_info.html", post=post)
