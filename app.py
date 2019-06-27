@@ -35,7 +35,34 @@ def show_user_info(user_id):
     user_info = User.query.get(user_id)
     return render_template('user_info.html', user=user_info)
 
+@app.route("/users/new")
+def create_new_user_page():
+    """Show an add form for users"""
+    return render_template("create_user.html")
+
+@app.route("/users_new", methods=["POST"])
+def add_new_user():
+    """Process the add form, adding a new user and going back to /users"""
+    first_name = request.form.get("first-name")
+    last_name = request.form.get("last-name")
+    image_url = request.form.get("image-url")
+
+    user = User(first_name=first_name, last_name=last_name, image_url=image_url)
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/users")
+
 @app.route("/edit_user/<user_id>")
 def show_edit_page(user_id):
     """ Show the edit page for a user"""
-    return render_template('edit_user.html', user=user_id)
+    user = User.query.get(user_id)
+    return render_template('edit_user.html', user=user)
+
+@app.route("/edit_user/<user_id>", methods=["POST"])
+def edit_user(user_id):
+    """ Process the edit form, returning the user to the /users page"""
+
+    first_name = request.form.get("first-name")
+    last_name = request.form.get("last-name")
+    image_url = request.form.get("image-url")
