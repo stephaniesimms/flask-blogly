@@ -1,6 +1,6 @@
 """Blogly application."""
 from flask import Flask, request, render_template, redirect
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def get_users_list():
     return render_template("index.html", users=users_list)
 
 
-@app.route('/user/<user_id>')
+@app.route('/users/<user_id>')
 def show_user_info(user_id):
     """Show information about the given user."""
     user_info = User.query.get(user_id)
@@ -90,3 +90,29 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+
+@app.route("/users/<user_id>/posts/new")
+def show_new_post_page(user_id):
+    user = User.query.get(user_id)
+    
+    return render_template("post_add.html", user=user)
+
+
+@app.route("/users/<user_id>/posts", methods=["POST"])
+def add_new_post(user_id):
+    """Process the new post form. Redirect to user info page."""    
+    user = User.query.get(user_id)
+
+    title = request.form.get("title")
+    content = request.form.get("content")
+
+    post = Post(title=title,
+                content=content,
+                user_id=user.id)
+    db.session.add(post)
+    db.session.commit()
+
+    # posts = user.posts
+
+    return redirect(f"/users/{user.id}")

@@ -19,6 +19,26 @@
                 <button class="btn btn-danger">Delete</button>
             </form>
         </div>
+        
+        <h3>Posts</h3>
+
+        {% if user.posts %}
+        
+        <ul>
+            {% for post in user.posts %}
+            <li>
+                <a href="/post/{{ post.title }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        
+        {% else %}
+        <p>You have no posts right now.</p>
+        {% endif %}
+
+        <form action="/users/{{ user.id }}/posts/new">
+            <button class="btn btn-info">Add Post</button>
+        </form>
 </div>
 
 {% endblock %}
