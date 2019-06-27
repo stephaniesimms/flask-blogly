@@ -49,11 +49,12 @@ def add_new_user():
     last_name = request.form.get("last-name")
     image_url = request.form.get("image-url")
 
-    user = User(first_name=first_name,
-                last_name=last_name,
-                image_url=image_url)
-    db.session.add(user)
-    db.session.commit()
+    # user = User(first_name=first_name,
+    #             last_name=last_name,
+    #             image_url=image_url)
+    # db.session.add(user)
+    # db.session.commit()
+    User.add_user(first_name=first_name, last_name=last_name, image_url=image_url)
 
     return redirect("/users")
 
@@ -76,5 +77,14 @@ def edit_user(user_id):
 
     db.session.add(user)
     db.session.commit()
+
+    return redirect("/users")
+
+
+@app.route("/delete_user/<user_id>", methods=["POST"])
+def delete_user(user_id):
+    """Delete the user and redirect to users page."""
+
+    User.delete_user(user_id)
 
     return redirect("/users")

@@ -26,3 +26,19 @@ class User(db.Model):
 
     def __repr__(self):
         return f"< User id ='{self.id}' name='{self.first_name} {self.last_name}' >"
+
+    @classmethod
+    def add_user(cls, first_name, last_name, image_url):
+        """Create a new user record"""
+
+        user = User(first_name=first_name, last_name=last_name, image_url=image_url)
+        db.session.add(user)
+        db.session.commit()
+
+    @classmethod
+    def delete_user(cls, id):
+        """Delete a user from database"""
+        user = User.query.get(id)
+
+        db.session.delete(user)
+        db.session.commit()
