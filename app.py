@@ -60,15 +60,21 @@ def add_new_user():
 
 @app.route("/edit_user/<user_id>")
 def show_edit_page(user_id):
-    """ Show the edit page for a user."""
+    """Show the edit page for a user."""
     user = User.query.get(user_id)
     return render_template('edit_user.html', user=user)
 
 
 @app.route("/edit_user/<user_id>", methods=["POST"])
 def edit_user(user_id):
-    """ Process the edit form, returning the user to the /users page."""
+    """Process the edit form, returning the user to the /users page."""
 
-    first_name = request.form.get("first-name")
-    last_name = request.form.get("last-name")
-    image_url = request.form.get("image-url")
+    user = User.query.get(user_id)
+    user.first_name = request.form.get("first-name")
+    user.last_name = request.form.get("last-name")
+    user.image_url = request.form.get("image-url")
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect("/users")

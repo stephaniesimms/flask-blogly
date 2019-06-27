@@ -1,10 +1,10 @@
 """Models for Blogly."""
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
-
 """Default users image."""
 PLACEHOLDER_IMG = "https://www.dictionary.com/e/wp-content/uploads/2018/03/Upside-Down_Face_Emoji.png"
+
+db = SQLAlchemy()
 
 
 def connect_db(app):
