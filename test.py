@@ -60,3 +60,6 @@ class BloglyIntegrationTestCase(unittest.TestCase):
 
     # def test_deleting(self):
     #     id = self.user.id
+
+    # What to test:
+    # 

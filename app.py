@@ -117,9 +117,27 @@ def add_new_post(user_id):
     return redirect(f"/users/{user.id}")
 
 
-@app.route("/post/<post_id>")
+@app.route("/posts/<post_id>")
 def show_post(post_id):
     """Show a post."""
 
     post = Post.query.get(post_id)
     return render_template("post_info.html", post=post)
+
+
+@app.route("/posts/<post_id>/edit")
+def show_edit_post_page(post_id):
+    """ Show form to edit a post"""
+    
+    post = Post.query.get(post_id)
+    return render_template('post_edit.html', post=post)
+
+
+@app.route("/posts/<post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    post = Post.query.get(post_id)
+    
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect("/users")
