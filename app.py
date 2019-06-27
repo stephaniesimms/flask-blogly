@@ -25,7 +25,7 @@ def show_homepage():
 @app.route('/users')
 def get_users_list():
     """Show list of all users."""
-    users_list = User.query.all()
+    users_list = User.query.order_by("id").all()
     return render_template("index.html", users=users_list)
 
 
@@ -47,14 +47,14 @@ def add_new_user():
     """Process the add form, adding a new user and going back to /users."""
     first_name = request.form.get("first-name")
     last_name = request.form.get("last-name")
-    image_url = request.form.get("image-url")
+    # get user image otherwise assign value as None to insert default image
+    image_url = request.form.get("image-url") or None
 
-    # user = User(first_name=first_name,
-    #             last_name=last_name,
-    #             image_url=image_url)
-    # db.session.add(user)
-    # db.session.commit()
-    User.add_user(first_name=first_name, last_name=last_name, image_url=image_url)
+    user = User(first_name=first_name,
+                last_name=last_name,
+                image_url=image_url)
+    db.session.add(user)
+    db.session.commit()
 
     return redirect("/users")
 
@@ -73,7 +73,7 @@ def edit_user(user_id):
     user = User.query.get(user_id)
     user.first_name = request.form.get("first-name")
     user.last_name = request.form.get("last-name")
-    user.image_url = request.form.get("image-url")
+    user.image_url = request.form.get("image-url") 
 
     db.session.add(user)
     db.session.commit()
@@ -85,6 +85,8 @@ def edit_user(user_id):
 def delete_user(user_id):
     """Delete the user and redirect to users page."""
 
-    User.delete_user(user_id)
+    user = User.query.get(user_id)
+    db.session.delete(user)
+    db.session.commit()
 
     return redirect("/users")
